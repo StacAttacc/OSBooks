@@ -63,6 +63,3 @@ dist/
 
 # NuGet local cache (set by flake.nix)
 .nuget/
-
-# Local MySQL data
-.mysql/
