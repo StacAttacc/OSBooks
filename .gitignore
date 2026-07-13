@@ -55,3 +55,11 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# NuGet local cache (set by flake.nix)
+.nuget/
