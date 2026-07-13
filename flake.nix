@@ -17,6 +17,7 @@
             dotnet-sdk_9
             nodejs_22
             git
+            csharpier
           ];
 
           DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
