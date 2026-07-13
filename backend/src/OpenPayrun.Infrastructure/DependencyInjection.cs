@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OSBooks.Application.Interfaces;
-using OSBooks.Infrastructure.Persistence;
+using OpenPayrun.Application.Interfaces;
+using OpenPayrun.Infrastructure.Persistence;
 
-namespace OSBooks.Infrastructure;
+namespace OpenPayrun.Infrastructure;
 
 public static class DependencyInjection
 {

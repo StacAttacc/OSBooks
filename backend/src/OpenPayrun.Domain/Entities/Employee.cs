@@ -1,4 +1,4 @@
-namespace OSBooks.Domain.Entities;
+namespace OpenPayrun.Domain.Entities;
 
 public class Employee
 {

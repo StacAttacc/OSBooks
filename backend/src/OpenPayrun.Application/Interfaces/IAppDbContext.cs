@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using OSBooks.Domain.Entities;
+using OpenPayrun.Domain.Entities;
 
-namespace OSBooks.Application.Interfaces;
+namespace OpenPayrun.Application.Interfaces;
 
 public interface IAppDbContext
 {

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using OSBooks.Application.Interfaces;
-using OSBooks.Domain.Entities;
+using OpenPayrun.Application.Interfaces;
+using OpenPayrun.Domain.Entities;
 
-namespace OSBooks.Infrastructure.Persistence;
+namespace OpenPayrun.Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {

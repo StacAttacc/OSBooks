@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.*" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OSBooks.Application\OSBooks.Application.csproj" />
-    <ProjectReference Include="..\OSBooks.Domain\OSBooks.Domain.csproj" />
+    <ProjectReference Include="..\OpenPayrun.Application\OpenPayrun.Application.csproj" />
+    <ProjectReference Include="..\OpenPayrun.Domain\OpenPayrun.Domain.csproj" />
   </ItemGroup>
 </Project>

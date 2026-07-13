@@ -2,7 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OSBooks.Application;
+namespace OpenPayrun.Application;
 
 public static class DependencyInjection
 {

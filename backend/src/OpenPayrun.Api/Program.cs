@@ -1,5 +1,5 @@
-using OSBooks.Application;
-using OSBooks.Infrastructure;
+using OpenPayrun.Application;
+using OpenPayrun.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
