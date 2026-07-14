@@ -69,3 +69,6 @@ dist/
 *.xlsx
 *.xls
 *.xlsm
+
+# LibreOffice lock files
+.~lock.*#
