@@ -1,4 +1,4 @@
-:host ::ng-deep .modal { width: 560px; }
+:host ::ng-deep .app-modal { width: 480px; }
 
 .bracket-table { width: 100%; border-collapse: collapse; margin-top: 0.25rem; }
 .bracket-table th { font-size: 0.8rem; font-weight: 500; text-align: left; padding: 0.25rem 0.5rem; background: #f9f9f9; border-bottom: 1px solid #e0e0e0; }
@@ -8,3 +8,11 @@
 .btn-remove { background: none; border: none; color: #c00; cursor: pointer; font-size: 1rem; padding: 0 0.25rem; }
 .btn-add { background: none; border: 1px dashed #ccc; border-radius: 4px; padding: 0.25rem 0.75rem; font-size: 0.85rem; cursor: pointer; color: #555; margin-top: 0.25rem; }
 .btn-add:hover { background: #f5f5f5; }
+
+.calc-results { display: flex; flex-direction: column; gap: 1rem; border-top: 1px solid var(--color-base-300); padding-top: 1rem; }
+.calc-section { display: flex; flex-direction: column; gap: 0.25rem; }
+.calc-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-base-content); opacity: 0.6; margin-bottom: 0.25rem; }
+.calc-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.2rem 0; color: var(--color-base-content); }
+.calc-gross { font-size: 1rem; font-weight: 600; }
+.calc-total { border-top: 1px solid var(--color-base-300); margin-top: 0.25rem; padding-top: 0.4rem; font-weight: 600; }
+.calc-net { font-weight: 700; font-size: 1rem; color: var(--color-base-content); }

@@ -1,6 +1,6 @@
 <div class="page-header">
-  <h1>Tax Rate Sets</h1>
   <button class="btn-primary" (click)="openAdd()">Add Rate Set</button>
+  <button class="btn-primary" (click)="openCalc()">Calculate</button>
 </div>
 
 @if (rates().length > 0) {
@@ -137,5 +137,65 @@
       {{ submitting() ? 'Saving…' : 'Save' }}
     </button>
   </div>
+
+</app-modal>
+
+<app-modal title="Calculate" [show]="showCalcModal()" (closed)="closeCalc()">
+
+  <div class="form-section">
+    <div class="form-grid">
+      <label>Pay period
+        <input type="month" [(ngModel)]="calc.period" />
+      </label>
+      <label>Gross pay
+        <input type="number" [(ngModel)]="calc.grossPay" min="0" step="0.01" />
+      </label>
+      <label style="grid-column: 1 / -1;">Prior gross total
+        <input type="number" [(ngModel)]="calc.ytdGrossEarnings" min="0" step="0.01" />
+      </label>
+    </div>
+    <label class="label-inline">
+      <input type="checkbox" [(ngModel)]="calc.selfEmployed" />
+      Self-employed / incorporated (no EI)
+    </label>
+  </div>
+
+  <div class="modal-actions" style="justify-content: flex-start; margin-top: 0;">
+    <button class="btn-primary" (click)="calculate()" [disabled]="calculating()">
+      {{ calculating() ? 'Calculating…' : 'Calculate' }}
+    </button>
+  </div>
+
+  @if (calcResult(); as r) {
+    <div class="calc-results">
+      <div class="calc-section">
+        <div class="calc-row calc-gross">
+          <span>Gross Pay</span><span>{{ r.grossPay | currency:'CAD':'symbol-narrow' }}</span>
+        </div>
+      </div>
+
+      <div class="calc-section">
+        <div class="calc-section-title">Employee Deductions</div>
+        <div class="calc-row"><span>QPP Tier 1</span><span>{{ r.qppTier1 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>QPP Tier 2</span><span>{{ r.qppTier2 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>EI Premium</span><span>{{ r.eiPremium | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>QPIP</span><span>{{ r.qpipPremium | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>Federal Income Tax</span><span>{{ r.federalIncomeTax | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>Quebec Income Tax</span><span>{{ r.quebecIncomeTax | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row calc-total"><span>Total Deductions</span><span>{{ r.totalEmployeeDeductions | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row calc-net"><span>Net Pay</span><span>{{ r.netPay | currency:'CAD':'symbol-narrow' }}</span></div>
+      </div>
+
+      <div class="calc-section">
+        <div class="calc-section-title">Employer Contributions</div>
+        <div class="calc-row"><span>QPP Tier 1</span><span>{{ r.employerQppTier1 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>QPP Tier 2</span><span>{{ r.employerQppTier2 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>EI</span><span>{{ r.employerEi | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>QPIP</span><span>{{ r.employerQpip | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>FSSQ</span><span>{{ r.employerFssq | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row calc-total"><span>Total Contributions</span><span>{{ r.totalEmployerContributions | currency:'CAD':'symbol-narrow' }}</span></div>
+      </div>
+    </div>
+  }
 
 </app-modal>

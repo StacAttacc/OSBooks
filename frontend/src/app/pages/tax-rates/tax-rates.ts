@@ -1,13 +1,14 @@
 import { Component, inject, signal, ChangeDetectorRef, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { DecimalPipe, DatePipe, PercentPipe } from '@angular/common';
+import { DecimalPipe, DatePipe, PercentPipe, CurrencyPipe } from '@angular/common';
 import { Modal } from '../../components/modal/modal';
 import { TaxRateSet, TaxRateSetBody, BracketDto } from '../../models/tax-rate.model';
+import { CalcResult } from '../../models/pay-run.model';
 
 @Component({
   selector: 'app-tax-rates',
-  imports: [FormsModule, DecimalPipe, DatePipe, PercentPipe, Modal],
+  imports: [FormsModule, DecimalPipe, DatePipe, PercentPipe, CurrencyPipe, Modal],
   templateUrl: './tax-rates.html',
   styleUrl: './tax-rates.css',
 })
@@ -21,6 +22,16 @@ export class TaxRates implements OnInit {
   editingId = signal<number | null>(null);
 
   draft: TaxRateSetBody = emptyDraft();
+
+  showCalcModal = signal(false);
+  calculating = signal(false);
+  calcResult = signal<CalcResult | null>(null);
+  calc = {
+    period: new Date().toISOString().slice(0, 7),
+    grossPay: 0,
+    ytdGrossEarnings: 0,
+    selfEmployed: false,
+  };
 
   ngOnInit() { this.load(); }
 
@@ -62,6 +73,40 @@ export class TaxRates implements OnInit {
       next: () => { this.submitting.set(false); this.close(); this.load(); },
       error: () => { this.submitting.set(false); },
     });
+  }
+
+  openCalc() {
+    this.calcResult.set(null);
+    this.showCalcModal.set(true);
+  }
+
+  closeCalc() { this.showCalcModal.set(false); }
+
+  calculate() {
+    this.calculating.set(true);
+    const periodStart = this.calc.period + '-01';
+    this.http.post<CalcResult>('/api/pay-runs/calculate', {
+      periodStart,
+      grossPay: this.calc.grossPay,
+      frequency: this.deriveFrequency(),
+      selfEmployed: this.calc.selfEmployed,
+      ytdGrossEarnings: this.calc.ytdGrossEarnings,
+    }).subscribe({
+      next: result => { this.calcResult.set(result); this.calculating.set(false); },
+      error: () => { this.calculating.set(false); },
+    });
+  }
+
+  private deriveFrequency(): number {
+    const { grossPay, ytdGrossEarnings, period } = this.calc;
+    const month = parseInt(period.split('-')[1], 10);
+    if (!grossPay || !ytdGrossEarnings) return month === 1 ? 12 : 12;
+    const priorPeriods = Math.round(ytdGrossEarnings / grossPay);
+    const impliedFrequency = (priorPeriods + 1) / (month / 12);
+    const valid = [12, 24, 26, 52];
+    return valid.reduce((a, b) =>
+      Math.abs(b - impliedFrequency) < Math.abs(a - impliedFrequency) ? b : a
+    );
   }
 
   addFederalBracket() {

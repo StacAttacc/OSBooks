@@ -8,8 +8,8 @@
   z-index: 100;
 }
 
-.modal {
-  background: white;
+.app-modal {
+  background: var(--color-base-100);
   border-radius: 6px;
   padding: 2rem;
   width: 420px;
@@ -20,4 +20,4 @@
   gap: 1rem;
 }
 
-.modal h2 { margin: 0; }
+.app-modal h2 { margin: 0; }

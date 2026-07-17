@@ -1,6 +1,6 @@
 @if (show()) {
   <div class="modal-backdrop" (click)="closed.emit()">
-    <div class="modal" (click)="$event.stopPropagation()">
+    <div class="app-modal" (click)="$event.stopPropagation()">
       <h2>{{ title() }}</h2>
       <ng-content />
     </div>
