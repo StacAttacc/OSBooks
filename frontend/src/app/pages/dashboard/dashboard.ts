@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { PayRunResponse } from '../../models/payrun.model';
+import { Modal } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [FormsModule, CurrencyPipe, DatePipe],
+  imports: [FormsModule, CurrencyPipe, DatePipe, Modal],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
