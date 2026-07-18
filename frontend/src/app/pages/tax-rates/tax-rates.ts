@@ -6,6 +6,7 @@ import { Modal } from '../../components/modal/modal';
 import { TaxRateSet, TaxRateSetBody, BracketDto } from '../../models/tax-rate.model';
 import { CalcResult } from '../../models/pay-run.model';
 import { AuthService } from '../../services/auth.service';
+import { I18nService } from '../../services/i18n.service';
 
 @Component({
   selector: 'app-tax-rates',
@@ -17,6 +18,7 @@ export class TaxRates implements OnInit {
   private http = inject(HttpClient);
   private cdr = inject(ChangeDetectorRef);
   authService = inject(AuthService);
+  protected t = inject(I18nService).t;
 
   rates = signal<TaxRateSet[]>([]);
   showModal = signal(false);

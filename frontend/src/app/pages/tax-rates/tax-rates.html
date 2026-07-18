@@ -1,21 +1,21 @@
 <div class="page-header">
   @if (authService.isAdmin()) {
-    <button class="btn-primary" (click)="openAdd()">Add Rate Set</button>
+    <button class="btn-primary" (click)="openAdd()">{{ t().taxRates.addBtn }}</button>
   }
-  <button class="btn-primary" (click)="openCalc()">Calculate</button>
+  <button class="btn-primary" (click)="openCalc()">{{ t().taxRates.calcBtn }}</button>
 </div>
 
 @if (rates().length > 0) {
   <table>
     <thead>
       <tr>
-        <th>Period</th>
-        <th>YMPE</th>
-        <th>YAMPE</th>
-        <th>QPP T1</th>
-        <th>QPP T2</th>
-        <th>EI (QC)</th>
-        <th>QPIP</th>
+        <th>{{ t().taxRates.table.period }}</th>
+        <th>{{ t().taxRates.table.ympe }}</th>
+        <th>{{ t().taxRates.table.yampe }}</th>
+        <th>{{ t().taxRates.table.qppT1 }}</th>
+        <th>{{ t().taxRates.table.qppT2 }}</th>
+        <th>{{ t().taxRates.table.ei }}</th>
+        <th>{{ t().taxRates.table.qpip }}</th>
         @if (authService.isAdmin()) { <th></th> }
       </tr>
     </thead>
@@ -29,72 +29,72 @@
           <td>{{ r.qppTier2Rate | percent:'1.2-2' }}</td>
           <td>{{ r.eiEmployeeRate | percent:'1.2-2' }}</td>
           <td>{{ r.qpipEmployeeRate | percent:'1.3-3' }}</td>
-          @if (authService.isAdmin()) { <td><button (click)="openEdit(r)">Edit</button></td> }
+          @if (authService.isAdmin()) { <td><button (click)="openEdit(r)">{{ t().taxRates.editBtn }}</button></td> }
         </tr>
       }
     </tbody>
   </table>
 } @else {
-  <p class="empty">No tax rate sets found.</p>
+  <p class="empty">{{ t().taxRates.empty }}</p>
 }
 
-<app-modal [title]="editingId() !== null ? 'Edit Rate Set' : 'Add Rate Set'"
+<app-modal [title]="editingId() !== null ? t().taxRates.modal.editTitle : t().taxRates.modal.addTitle"
            [show]="showModal()" (closed)="close()">
 
   <div class="form-section">
-    <h3>Effective period</h3>
+    <h3>{{ t().taxRates.modal.period.section }}</h3>
     <div class="form-grid">
-      <label>From <input type="date" [(ngModel)]="draft.effectiveFrom" /></label>
-      <label>To (blank = current) <input type="date" [(ngModel)]="draft.effectiveTo" /></label>
+      <label>{{ t().taxRates.modal.period.from }} <input type="date" [(ngModel)]="draft.effectiveFrom" /></label>
+      <label>{{ t().taxRates.modal.period.to }} <input type="date" [(ngModel)]="draft.effectiveTo" /></label>
     </div>
   </div>
 
   <div class="form-section">
-    <h3>QPP / RRQ</h3>
+    <h3>{{ t().taxRates.modal.qpp.section }}</h3>
     <div class="form-grid">
-      <label>Exemption <input type="number" [(ngModel)]="draft.qppExemption" step="1" /></label>
-      <label>YMPE <input type="number" [(ngModel)]="draft.qppYmpe" step="1" /></label>
-      <label>YAMPE <input type="number" [(ngModel)]="draft.qppYampe" step="1" /></label>
-      <label>Base rate <input type="number" [(ngModel)]="draft.qppBaseRate" step="0.0001" /></label>
-      <label>Add. T1 rate <input type="number" [(ngModel)]="draft.qppAdditionalTier1Rate" step="0.0001" /></label>
-      <label>T1 rate (base + add.) <input type="number" [(ngModel)]="draft.qppTier1Rate" step="0.0001" /></label>
-      <label>T2 rate <input type="number" [(ngModel)]="draft.qppTier2Rate" step="0.0001" /></label>
-      <label>T1 max (employee) <input type="number" [(ngModel)]="draft.qppTier1MaxEmployee" step="0.01" /></label>
-      <label>T2 max (employee) <input type="number" [(ngModel)]="draft.qppTier2MaxEmployee" step="0.01" /></label>
+      <label>{{ t().taxRates.modal.qpp.exemption }} <input type="number" [(ngModel)]="draft.qppExemption" step="1" /></label>
+      <label>{{ t().taxRates.modal.qpp.ympe }} <input type="number" [(ngModel)]="draft.qppYmpe" step="1" /></label>
+      <label>{{ t().taxRates.modal.qpp.yampe }} <input type="number" [(ngModel)]="draft.qppYampe" step="1" /></label>
+      <label>{{ t().taxRates.modal.qpp.baseRate }} <input type="number" [(ngModel)]="draft.qppBaseRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.qpp.addT1Rate }} <input type="number" [(ngModel)]="draft.qppAdditionalTier1Rate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.qpp.t1Rate }} <input type="number" [(ngModel)]="draft.qppTier1Rate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.qpp.t2Rate }} <input type="number" [(ngModel)]="draft.qppTier2Rate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.qpp.t1Max }} <input type="number" [(ngModel)]="draft.qppTier1MaxEmployee" step="0.01" /></label>
+      <label>{{ t().taxRates.modal.qpp.t2Max }} <input type="number" [(ngModel)]="draft.qppTier2MaxEmployee" step="0.01" /></label>
     </div>
   </div>
 
   <div class="form-section">
-    <h3>EI</h3>
+    <h3>{{ t().taxRates.modal.ei.section }}</h3>
     <div class="form-grid">
-      <label>Employee rate <input type="number" [(ngModel)]="draft.eiEmployeeRate" step="0.0001" /></label>
-      <label>Employer multiplier <input type="number" [(ngModel)]="draft.eiEmployerMultiplier" step="0.01" /></label>
-      <label>Max insurable earnings <input type="number" [(ngModel)]="draft.eiMaxInsurableEarnings" step="1" /></label>
-      <label>Max employee premium <input type="number" [(ngModel)]="draft.eiMaxEmployeePremium" step="0.01" /></label>
+      <label>{{ t().taxRates.modal.ei.employeeRate }} <input type="number" [(ngModel)]="draft.eiEmployeeRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.ei.employerMultiplier }} <input type="number" [(ngModel)]="draft.eiEmployerMultiplier" step="0.01" /></label>
+      <label>{{ t().taxRates.modal.ei.maxInsurable }} <input type="number" [(ngModel)]="draft.eiMaxInsurableEarnings" step="1" /></label>
+      <label>{{ t().taxRates.modal.ei.maxEmployeePremium }} <input type="number" [(ngModel)]="draft.eiMaxEmployeePremium" step="0.01" /></label>
     </div>
   </div>
 
   <div class="form-section">
-    <h3>QPIP / RQAP</h3>
+    <h3>{{ t().taxRates.modal.qpip.section }}</h3>
     <div class="form-grid">
-      <label>Employee rate <input type="number" [(ngModel)]="draft.qpipEmployeeRate" step="0.0001" /></label>
-      <label>Employer rate <input type="number" [(ngModel)]="draft.qpipEmployerRate" step="0.0001" /></label>
-      <label>Max insurable earnings <input type="number" [(ngModel)]="draft.qpipMaxInsurableEarnings" step="1" /></label>
-      <label>Max employee premium <input type="number" [(ngModel)]="draft.qpipMaxEmployeePremium" step="0.01" /></label>
-      <label>Max employer premium <input type="number" [(ngModel)]="draft.qpipMaxEmployerPremium" step="0.01" /></label>
+      <label>{{ t().taxRates.modal.qpip.employeeRate }} <input type="number" [(ngModel)]="draft.qpipEmployeeRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.qpip.employerRate }} <input type="number" [(ngModel)]="draft.qpipEmployerRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.qpip.maxInsurable }} <input type="number" [(ngModel)]="draft.qpipMaxInsurableEarnings" step="1" /></label>
+      <label>{{ t().taxRates.modal.qpip.maxEmployeePremium }} <input type="number" [(ngModel)]="draft.qpipMaxEmployeePremium" step="0.01" /></label>
+      <label>{{ t().taxRates.modal.qpip.maxEmployerPremium }} <input type="number" [(ngModel)]="draft.qpipMaxEmployerPremium" step="0.01" /></label>
     </div>
   </div>
 
   <div class="form-section">
-    <h3>Federal income tax</h3>
+    <h3>{{ t().taxRates.modal.federal.section }}</h3>
     <div class="form-grid">
-      <label>Basic personal amount <input type="number" [(ngModel)]="draft.federalBasicPersonalAmount" step="1" /></label>
-      <label>Employment amount <input type="number" [(ngModel)]="draft.federalEmploymentAmount" step="1" /></label>
-      <label>Lowest rate <input type="number" [(ngModel)]="draft.federalLowestRate" step="0.0001" /></label>
-      <label>QC abatement <input type="number" [(ngModel)]="draft.quebecFederalAbatement" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.federal.basicPersonal }} <input type="number" [(ngModel)]="draft.federalBasicPersonalAmount" step="1" /></label>
+      <label>{{ t().taxRates.modal.federal.employmentAmount }} <input type="number" [(ngModel)]="draft.federalEmploymentAmount" step="1" /></label>
+      <label>{{ t().taxRates.modal.federal.lowestRate }} <input type="number" [(ngModel)]="draft.federalLowestRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.federal.qcAbatement }} <input type="number" [(ngModel)]="draft.quebecFederalAbatement" step="0.0001" /></label>
     </div>
     <table class="bracket-table">
-      <thead><tr><th>Upper bound (blank = last)</th><th>Rate</th><th></th></tr></thead>
+      <thead><tr><th>{{ t().taxRates.modal.federal.upperBound }}</th><th>{{ t().taxRates.modal.federal.rate }}</th><th></th></tr></thead>
       <tbody>
         @for (b of draft.federalBrackets; track $index; let i = $index) {
           <tr>
@@ -105,21 +105,21 @@
         }
       </tbody>
     </table>
-    <button class="btn-add" (click)="addFederalBracket()">+ Add bracket</button>
+    <button class="btn-add" (click)="addFederalBracket()">{{ t().taxRates.modal.federal.addBracket }}</button>
   </div>
 
   <div class="form-section">
-    <h3>Quebec income tax + FSSQ</h3>
+    <h3>{{ t().taxRates.modal.quebec.section }}</h3>
     <div class="form-grid">
-      <label>Basic personal amount <input type="number" [(ngModel)]="draft.quebecBasicPersonalAmount" step="1" /></label>
-      <label>Worker deduction max <input type="number" [(ngModel)]="draft.quebecWorkerDeductionMax" step="1" /></label>
-      <label>Worker deduction rate <input type="number" [(ngModel)]="draft.quebecWorkerDeductionRate" step="0.0001" /></label>
-      <label>Lowest rate <input type="number" [(ngModel)]="draft.quebecLowestRate" step="0.0001" /></label>
-      <label>FSSQ small employer <input type="number" [(ngModel)]="draft.fssqSmallEmployerRate" step="0.0001" /></label>
-      <label>FSSQ large employer <input type="number" [(ngModel)]="draft.fssqLargeEmployerRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.quebec.basicPersonal }} <input type="number" [(ngModel)]="draft.quebecBasicPersonalAmount" step="1" /></label>
+      <label>{{ t().taxRates.modal.quebec.workerDeductionMax }} <input type="number" [(ngModel)]="draft.quebecWorkerDeductionMax" step="1" /></label>
+      <label>{{ t().taxRates.modal.quebec.workerDeductionRate }} <input type="number" [(ngModel)]="draft.quebecWorkerDeductionRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.quebec.lowestRate }} <input type="number" [(ngModel)]="draft.quebecLowestRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.quebec.fssqSmall }} <input type="number" [(ngModel)]="draft.fssqSmallEmployerRate" step="0.0001" /></label>
+      <label>{{ t().taxRates.modal.quebec.fssqLarge }} <input type="number" [(ngModel)]="draft.fssqLargeEmployerRate" step="0.0001" /></label>
     </div>
     <table class="bracket-table">
-      <thead><tr><th>Upper bound (blank = last)</th><th>Rate</th><th></th></tr></thead>
+      <thead><tr><th>{{ t().taxRates.modal.quebec.upperBound }}</th><th>{{ t().taxRates.modal.quebec.rate }}</th><th></th></tr></thead>
       <tbody>
         @for (b of draft.quebecBrackets; track $index; let i = $index) {
           <tr>
@@ -130,48 +130,48 @@
         }
       </tbody>
     </table>
-    <button class="btn-add" (click)="addQuebecBracket()">+ Add bracket</button>
+    <button class="btn-add" (click)="addQuebecBracket()">{{ t().taxRates.modal.quebec.addBracket }}</button>
   </div>
 
   <div class="modal-actions">
     @if (editingId() !== null) {
       <button [class]="confirmingDelete() ? 'btn-danger-outline' : 'btn-danger'"
               (click)="delete()" [disabled]="submitting()">
-        {{ confirmingDelete() ? 'Confirm delete' : 'Delete' }}
+        {{ confirmingDelete() ? t().taxRates.modal.confirmDelete : t().taxRates.modal.delete }}
       </button>
     }
     <div style="flex: 1"></div>
-    <button (click)="close()">Cancel</button>
+    <button (click)="close()">{{ t().taxRates.modal.cancel }}</button>
     <button class="btn-primary" (click)="save()" [disabled]="submitting()">
-      {{ submitting() ? 'Saving…' : 'Save' }}
+      {{ submitting() ? t().taxRates.modal.saving : t().taxRates.modal.save }}
     </button>
   </div>
 
 </app-modal>
 
-<app-modal title="Calculate" [show]="showCalcModal()" (closed)="closeCalc()">
+<app-modal [title]="t().calc.title" [show]="showCalcModal()" (closed)="closeCalc()">
 
   <div class="form-section">
     <div class="form-grid">
-      <label>Pay period
+      <label>{{ t().calc.payPeriod }}
         <input type="month" [(ngModel)]="calc.period" />
       </label>
-      <label>Gross pay
+      <label>{{ t().calc.grossPay }}
         <input type="number" [(ngModel)]="calc.grossPay" min="0" step="0.01" />
       </label>
-      <label style="grid-column: 1 / -1;">Prior gross total
+      <label style="grid-column: 1 / -1;">{{ t().calc.priorGross }}
         <input type="number" [(ngModel)]="calc.ytdGrossEarnings" min="0" step="0.01" />
       </label>
     </div>
     <label class="label-inline">
       <input type="checkbox" [(ngModel)]="calc.selfEmployed" />
-      Self-employed / incorporated (no EI)
+      {{ t().calc.selfEmployed }}
     </label>
   </div>
 
   <div class="modal-actions" style="justify-content: flex-start; margin-top: 0;">
     <button class="btn-primary" (click)="calculate()" [disabled]="calculating()">
-      {{ calculating() ? 'Calculating…' : 'Calculate' }}
+      {{ calculating() ? t().calc.calculating : t().calc.calculate }}
     </button>
   </div>
 
@@ -179,30 +179,30 @@
     <div class="calc-results">
       <div class="calc-section">
         <div class="calc-row calc-gross">
-          <span>Gross Pay</span><span>{{ r.grossPay | currency:'CAD':'symbol-narrow' }}</span>
+          <span>{{ t().calc.results.grossPay }}</span><span>{{ r.grossPay | currency:'CAD':'symbol-narrow' }}</span>
         </div>
       </div>
 
       <div class="calc-section">
-        <div class="calc-section-title">Employee Deductions</div>
-        <div class="calc-row"><span>QPP Tier 1</span><span>{{ r.qppTier1 | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>QPP Tier 2</span><span>{{ r.qppTier2 | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>EI Premium</span><span>{{ r.eiPremium | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>QPIP</span><span>{{ r.qpipPremium | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>Federal Income Tax</span><span>{{ r.federalIncomeTax | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>Quebec Income Tax</span><span>{{ r.quebecIncomeTax | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row calc-total"><span>Total Deductions</span><span>{{ r.totalEmployeeDeductions | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row calc-net"><span>Net Pay</span><span>{{ r.netPay | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-section-title">{{ t().calc.results.employeeDeductions }}</div>
+        <div class="calc-row"><span>{{ t().calc.results.qppT1 }}</span><span>{{ r.qppTier1 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.qppT2 }}</span><span>{{ r.qppTier2 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.ei }}</span><span>{{ r.eiPremium | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.qpip }}</span><span>{{ r.qpipPremium | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.federalTax }}</span><span>{{ r.federalIncomeTax | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.quebecTax }}</span><span>{{ r.quebecIncomeTax | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row calc-total"><span>{{ t().calc.results.totalDeductions }}</span><span>{{ r.totalEmployeeDeductions | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row calc-net"><span>{{ t().calc.results.netPay }}</span><span>{{ r.netPay | currency:'CAD':'symbol-narrow' }}</span></div>
       </div>
 
       <div class="calc-section">
-        <div class="calc-section-title">Employer Contributions</div>
-        <div class="calc-row"><span>QPP Tier 1</span><span>{{ r.employerQppTier1 | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>QPP Tier 2</span><span>{{ r.employerQppTier2 | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>EI</span><span>{{ r.employerEi | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>QPIP</span><span>{{ r.employerQpip | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row"><span>FSSQ</span><span>{{ r.employerFssq | currency:'CAD':'symbol-narrow' }}</span></div>
-        <div class="calc-row calc-total"><span>Total Contributions</span><span>{{ r.totalEmployerContributions | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-section-title">{{ t().calc.results.employerContributions }}</div>
+        <div class="calc-row"><span>{{ t().calc.results.employerQppT1 }}</span><span>{{ r.employerQppTier1 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.employerQppT2 }}</span><span>{{ r.employerQppTier2 | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.employerEi }}</span><span>{{ r.employerEi | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.qpip }}</span><span>{{ r.employerQpip | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row"><span>{{ t().calc.results.fssq }}</span><span>{{ r.employerFssq | currency:'CAD':'symbol-narrow' }}</span></div>
+        <div class="calc-row calc-total"><span>{{ t().calc.results.totalContributions }}</span><span>{{ r.totalEmployerContributions | currency:'CAD':'symbol-narrow' }}</span></div>
       </div>
     </div>
   }

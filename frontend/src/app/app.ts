@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LucideFileText, LucideMenu, LucideLogIn, LucideLogOut } from '@lucide/angular';
 import { Modal } from './components/modal/modal';
 import { AuthService } from './services/auth.service';
+import { I18nService } from './services/i18n.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,16 @@ import { AuthService } from './services/auth.service';
 })
 export class App {
   auth = inject(AuthService);
+  i18n = inject(I18nService);
+  protected t = this.i18n.t;
 
   showLoginModal = signal(false);
   loginError = signal(false);
   creds = { username: '', password: '' };
+
+  constructor() {
+    effect(() => { document.documentElement.lang = this.i18n.lang(); });
+  }
 
   openLogin() {
     this.loginError.set(false);

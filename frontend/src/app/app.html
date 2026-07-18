@@ -4,19 +4,26 @@
   <div class="drawer-content flex flex-col min-h-screen bg-base-300">
 
     <header class="navbar bg-base-200 border-b border-base-300 sticky top-0 z-30">
-      <label for="nav-drawer" class="btn btn-ghost btn-square hidden md:flex drawer-button" aria-label="Open menu">
+      <label for="nav-drawer" class="btn btn-ghost btn-square hidden md:flex drawer-button" [attr.aria-label]="t().nav.openMenu">
         <svg lucideMenu class="h-5 w-5" />
       </label>
       <span class="text-lg font-bold px-2 flex-1">OpenPayrun</span>
+
+      <div class="flex items-center gap-1 mr-2">
+        <button class="btn btn-ghost btn-xs font-mono" [class.font-bold]="i18n.lang() === 'en'" (click)="i18n.setLang('en')">EN</button>
+        <span class="text-base-content/30 text-xs">|</span>
+        <button class="btn btn-ghost btn-xs font-mono" [class.font-bold]="i18n.lang() === 'fr'" (click)="i18n.setLang('fr')">FR</button>
+      </div>
+
       @if (auth.isAdmin()) {
         <button class="btn btn-ghost btn-sm gap-1" (click)="logout()">
           <svg lucideLogOut class="h-4 w-4" />
-          Logout
+          {{ t().header.logout }}
         </button>
       } @else {
         <button class="btn btn-ghost btn-sm gap-1" (click)="openLogin()">
           <svg lucideLogIn class="h-4 w-4" />
-          Login
+          {{ t().header.login }}
         </button>
       }
     </header>
@@ -28,7 +35,7 @@
     <nav class="btm-nav btm-nav-sm md:hidden z-30">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <svg lucideFileText class="h-5 w-5" />
-        <span class="btm-nav-label">Tax Rates</span>
+        <span class="btm-nav-label">{{ t().nav.taxRates }}</span>
       </a>
     </nav>
 
@@ -42,7 +49,7 @@
         <li>
           <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <svg lucideFileText class="h-5 w-5" />
-            Tax Rates
+            {{ t().nav.taxRates }}
           </a>
         </li>
       </ul>
@@ -51,22 +58,22 @@
 
 </div>
 
-<app-modal title="Admin Login" [show]="showLoginModal()" (closed)="closeLogin()">
+<app-modal [title]="t().auth.title" [show]="showLoginModal()" (closed)="closeLogin()">
   <div class="form-section">
     <div class="form-grid">
-      <label>Username
+      <label>{{ t().auth.username }}
         <input type="text" [(ngModel)]="creds.username" autocomplete="username" />
       </label>
-      <label>Password
+      <label>{{ t().auth.password }}
         <input type="password" [(ngModel)]="creds.password" autocomplete="current-password" (keydown.enter)="login()" />
       </label>
     </div>
     @if (loginError()) {
-      <p class="login-error">Invalid credentials.</p>
+      <p class="login-error">{{ t().auth.error }}</p>
     }
   </div>
   <div class="modal-actions">
-    <button (click)="closeLogin()">Cancel</button>
-    <button class="btn-primary" (click)="login()">Login</button>
+    <button (click)="closeLogin()">{{ t().auth.cancel }}</button>
+    <button class="btn-primary" (click)="login()">{{ t().auth.submit }}</button>
   </div>
 </app-modal>
