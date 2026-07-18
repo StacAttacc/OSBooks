@@ -6,7 +6,9 @@
 </div>
 
 @if (rates().length > 0) {
-  <table>
+  <div class="w-full overflow-hidden">
+  <div class="overflow-x-auto" scrollFade>
+  <table class="w-auto min-w-full">
     <thead>
       <tr>
         <th>{{ t().taxRates.table.period }}</th>
@@ -34,6 +36,8 @@
       }
     </tbody>
   </table>
+  </div>
+  </div>
 } @else {
   <p class="empty">{{ t().taxRates.empty }}</p>
 }

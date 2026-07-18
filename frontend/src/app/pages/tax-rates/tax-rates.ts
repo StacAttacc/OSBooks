@@ -7,10 +7,11 @@ import { TaxRateSet, TaxRateSetBody, BracketDto } from '../../models/tax-rate.mo
 import { CalcResult } from '../../models/pay-run.model';
 import { AuthService } from '../../services/auth.service';
 import { I18nService } from '../../services/i18n.service';
+import { ScrollFadeDirective } from '../../directives/scroll-fade.directive';
 
 @Component({
   selector: 'app-tax-rates',
-  imports: [FormsModule, DecimalPipe, DatePipe, PercentPipe, CurrencyPipe, Modal],
+  imports: [FormsModule, DecimalPipe, DatePipe, PercentPipe, CurrencyPipe, Modal, ScrollFadeDirective],
   templateUrl: './tax-rates.html',
   styleUrl: './tax-rates.css',
 })
