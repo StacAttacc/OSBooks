@@ -22,6 +22,7 @@ export const EN = {
     editBtn: 'Edit',
     empty: 'No tax rate sets found.',
     loading: 'Loading…',
+    loadError: 'Failed to load tax rates. Please try again.',
     table: {
       period: 'Period',
       ympe: 'YMPE',

@@ -24,6 +24,7 @@ export const FR: Translations = {
     editBtn: 'Modifier',
     empty: 'Aucun jeu de taux trouvé.',
     loading: 'Chargement…',
+    loadError: 'Impossible de charger les taux. Veuillez réessayer.',
     table: {
       period: 'Période',
       ympe: 'MGA',

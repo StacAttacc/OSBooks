@@ -7,6 +7,8 @@
 
 @if (taxRatesQuery.isLoading()) {
   <p class="empty">{{ t().taxRates.loading }}</p>
+} @else if (taxRatesQuery.isError()) {
+  <p class="empty error">{{ t().taxRates.loadError }}</p>
 } @else if (rates().length > 0) {
   <div class="table-wrapper">
   <div class="table-scroll" scrollFade [scrollFadeSkipUp]="true"
