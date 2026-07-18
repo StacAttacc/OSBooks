@@ -1,12 +1,14 @@
 {
   "name": "OpenPayrun",
   "short_name": "OpenPayrun",
-  "description": "Calculateur de paie québécois — RRQ, AE, RQAP",
+  "description": "Calculateur de retenues à la source pour la paie québécoise — RRQ, AE, RQAP. Quebec payroll deductions calculator — QPP, EI, QPIP.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1a1a2e",
   "lang": "fr",
+  "dir": "ltr",
+  "categories": ["finance", "productivity"],
   "icons": [
     {
       "src": "favicon.ico",
