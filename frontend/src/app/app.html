@@ -13,6 +13,14 @@
         <button class="btn btn-ghost btn-xs font-mono" [class.font-bold]="i18n.lang() === 'en'" (click)="i18n.setLang('en')">EN</button>
         <span class="text-base-content/30 text-xs">|</span>
         <button class="btn btn-ghost btn-xs font-mono" [class.font-bold]="i18n.lang() === 'fr'" (click)="i18n.setLang('fr')">FR</button>
+        <span class="text-base-content/30 text-xs">|</span>
+        <button class="btn btn-ghost btn-square btn-xs" (click)="theme.toggle()" [attr.aria-label]="theme.theme() === 'light' ? 'Switch to dark mode' : 'Switch to light mode'">
+          @if (theme.theme() === 'light') {
+            <svg lucideMoon class="h-4 w-4" />
+          } @else {
+            <svg lucideSun class="h-4 w-4" />
+          }
+        </button>
       </div>
 
       @if (auth.isAdmin()) {
